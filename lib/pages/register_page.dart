@@ -2,35 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_messenger_app/color_schemes.g.dart';
 import 'package:flutter_messenger_app/components/my_button.dart';
 import 'package:flutter_messenger_app/components/my_textfield.dart';
-import 'package:flutter_messenger_app/pages/register_page.dart';
 
 
 
 
 
-
-class LogInPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
 
   //Email und Passwort Controller
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
+  final TextEditingController _confirmpw = TextEditingController();
 
-  // tap to register page
 
   final void Function()? onTap;
-
-  LogInPage({super.key, required this.onTap});
  
 
 
 
 
 
+  RegisterPage({super.key, required this.onTap});
 
   //login method
   void login() {
     
+  }
+
+  //regsiter method
+  void register() {
+
   }
 
   // This widget is the root of your application.
@@ -58,7 +60,7 @@ class LogInPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               Text(
-                "Willkommen zurück, wir haben dich vermisst!",
+                "Lass uns deinen ersten account erstellen!",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 16,
@@ -77,12 +79,21 @@ class LogInPage extends StatelessWidget {
 
               const SizedBox(height: 25),
 
-              //passwort text
-
               MyTextField(
                 hintText: "Password",
                 obscureText: true,
                 controller: _pwController,
+              ),
+
+
+              const SizedBox(height: 25),
+
+              //passwort text
+
+              MyTextField(
+                hintText: "Confirm Password",
+                obscureText: true,
+                controller: _confirmpw,
               ),
 
               const SizedBox(height: 25),
@@ -101,16 +112,17 @@ class LogInPage extends StatelessWidget {
               Row(
                 mainAxisAlignment : MainAxisAlignment.center,
                 children: [
-                  Text("Not a member?",
+                  Text("Already have an account?",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.onBackground
                     ),
                     
+                
                   ),
-                  GestureDetector(
-                    onTap: onTap,
-                    child: Text("Register now",
-                      style: TextStyle(fontWeight: FontWeight.bold,
+                  GestureDetector(    
+                    onTap: onTap,        
+                  child: Text("Login now",
+                    style: TextStyle(fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
                 
