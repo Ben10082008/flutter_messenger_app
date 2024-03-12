@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_messenger_app/auth/auth_service.dart';
 import 'package:flutter_messenger_app/color_schemes.g.dart';
 import 'package:flutter_messenger_app/components/my_button.dart';
 import 'package:flutter_messenger_app/components/my_textfield.dart';
@@ -20,19 +21,39 @@ class RegisterPage extends StatelessWidget {
  
 
 
-
-
-
   RegisterPage({super.key, required this.onTap});
 
-  //login method
-  void login() {
-    
-  }
-
+  
   //regsiter method
-  void register() {
+  void register(BuildContext context) {
+    final _auth = AuthService();
 
+    //password moatch -> create user
+
+    if (_pwController.text == _confirmpw.text) {
+      try {
+      _auth.signUpWithEmailPassword(
+      _emailController.text,
+       _pwController.text);
+      }catch (e) {
+        showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+        title: Text(e.toString())
+        )
+        );
+      }
+    }
+    //password dont match -> tell user to fix
+
+    else {
+      showDialog(
+        context: context,
+        builder: (context) =>const AlertDialog(
+        title: Text ("Passwords don't match!"),
+        )
+        );
+    }
   }
 
   // This widget is the root of your application.
@@ -103,7 +124,7 @@ class RegisterPage extends StatelessWidget {
               
               MyButton(
                 text: "Login",
-                onTap: login,
+                onTap: () => register(context),
               ),
 
               const SizedBox(height: 25),
