@@ -1,4 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_messenger_app/auth/auth_service.dart';
 import 'package:flutter_messenger_app/color_schemes.g.dart';
 import 'package:flutter_messenger_app/components/my_button.dart';
 import 'package:flutter_messenger_app/components/my_textfield.dart';
@@ -29,7 +32,24 @@ class LogInPage extends StatelessWidget {
 
 
   //login method
-  void login() {
+  void login(BuildContext context) async {
+    //auth service
+
+    final authService= AuthService();
+    try {
+      await authService.signInWithEmailPassword(_emailController.text, _pwController.text,);
+    }
+    
+    //catch errors
+
+    catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+        title: Text(e.toString()),
+      )
+      );
+    }
     
   }
 
@@ -92,7 +112,7 @@ class LogInPage extends StatelessWidget {
               
               MyButton(
                 text: "Login",
-                onTap: login,
+                onTap: () => login(context),
               ),
 
               const SizedBox(height: 25),
