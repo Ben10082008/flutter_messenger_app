@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_messenger_app/auth/auth_service.dart';
 import 'package:flutter_messenger_app/color_schemes.g.dart';
@@ -113,8 +115,10 @@ class LogInPage extends StatelessWidget {
               MyButton(
                 text: "Login",
                 onTap: () => login(context),
-              ),
-
+                
+              // ignore: prefer_const_constructors
+              ), 
+            
               const SizedBox(height: 25),
 
               //register now

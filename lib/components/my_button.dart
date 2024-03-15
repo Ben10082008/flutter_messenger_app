@@ -17,13 +17,18 @@ class MyButton extends StatelessWidget {
       child: Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
+      
       ),
       padding: const EdgeInsets.all(25),
       margin: const EdgeInsets.symmetric(horizontal: 25),
       child: Center(
-        child: Text("Login"),
+        child: Text("Login",
+         style: TextStyle(
+          fontSize: 20, 
+          color: Theme.of(context).colorScheme.onBackground),
+          ), 
+          ),
         ),
-    )
     );
   }
 }
