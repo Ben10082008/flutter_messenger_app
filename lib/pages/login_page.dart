@@ -1,9 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_messenger_app/auth/auth_service.dart';
+import 'package:flutter_messenger_app/services/auth/auth_service.dart';
 import 'package:flutter_messenger_app/color_schemes.g.dart';
 import 'package:flutter_messenger_app/components/my_button.dart';
 import 'package:flutter_messenger_app/components/my_textfield.dart';
