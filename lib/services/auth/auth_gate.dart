@@ -1,6 +1,6 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "package:flutter_messenger_app/auth/login_or_register.dart";
+import "package:flutter_messenger_app/services/auth/login_or_register.dart";
 import "package:flutter_messenger_app/pages/home_page.dart";
 
 class AuthGate extends StatelessWidget {
@@ -14,7 +14,7 @@ class AuthGate extends StatelessWidget {
       body: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const Homepage();
+          return  Homepage();
         }
 
         //user not logged in

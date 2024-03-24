@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import "package:flutter/material.dart";
-import "package:flutter_messenger_app/auth/auth_service.dart";
+import "package:flutter_messenger_app/services/auth/auth_service.dart";
 import "package:flutter_messenger_app/pages/setting_page.dart";
 
 class MyDrawer extends StatelessWidget {
