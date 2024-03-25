@@ -21,7 +21,13 @@ class Homepage extends StatelessWidget {
   Widget build (BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: 
+        Text(
+          "Home",
+           textAlign: TextAlign.center),
+        
+        
+        
       
       ),
       drawer: MyDrawer(),
@@ -60,15 +66,24 @@ class Homepage extends StatelessWidget {
   Widget _buildUserListItem(Map<String, dynamic> userData, BuildContext context) {
     //display all user except current user
 
-  return UserTile(
+    if (userData["email"] != _authService.getCurrentUser()!.email) {
+    
+    return UserTile(
     text: userData['email'],
     onTap: () {
+      //when tapped -> ChatPage
       Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(
         receiverEmail: userData["email"],
+        receiverID: userData["uid"],
       ),
       )
       );
     },
     );
+  }else {
+    return Container();
   }
   }
+      
+  }
+
