@@ -1,0 +1,93 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature
+      - test
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.16.7'
+          
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Display workspace content
+        run: ls -al
+
+      - name: Display Flutter version
+        run: flutter --version
+
+      - name: Check Flutter doctor
+        run: flutter doctor
+
+      - name: Build APK
+        run: flutter build apk
+
+      - name: Display workspace content
+        run: ls -al
+
+      - name: Print content of build folder
+        run: |
+          ls /home/runner/work/pantry-master/pantry-master/build/app/outputs/flutter-apk/
+           
+      - name: Check path of apk file
+        run: |
+          if [ -f "build/app/outputs/flutter-apk/app-release.apk" ]; then
+            echo "Binary file found"
+          else
+            echo "No binary file found in current workspace"
+            exit 1
+          fi
+    
+      - name: Distribute to Firebase (Alpha)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/feature'
+        run: |
+          npm install -g firebase-tools
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app $FIREBASE_APP_ID --token $FIREBASE_TOKEN --groups alpha
+      
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
+      - name: Distribute to Firebase (Beta)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: |
+          npm install -g firebase-tools
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app $FIREBASE_APP_ID --token $FIREBASE_TOKEN --groups beta
+      
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+
+      - name: Distribute to Firebase (Prod)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          npm install -g firebase-tools
+          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app $FIREBASE_APP_ID --token $FIREBASE_TOKEN --groups production
+      
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
