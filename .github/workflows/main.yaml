@@ -51,7 +51,7 @@ jobs:
 
       - name: Print content of build folder
         run: |
-          ls /home/runner/work/flutter-messenger-app/flutter-messenger-app/build/app/outputs/flutter-apk/
+          ls /home/runner/work/flutter_messenger_app/flutter_messenger_app/build/app/outputs/flutter-apk/
            
       - name: Check path of apk file
         run: |
