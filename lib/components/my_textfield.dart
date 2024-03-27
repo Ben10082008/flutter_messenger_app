@@ -4,6 +4,7 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
+  final FocusNode? focusNode;
 
 
   const MyTextField({
@@ -11,6 +12,7 @@ class MyTextField extends StatelessWidget {
     required this.hintText,
     required this.obscureText,
     required this.controller,
+    required this.focusNode,
     });
 
   @override
