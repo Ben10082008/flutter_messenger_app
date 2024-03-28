@@ -7,7 +7,7 @@ import "package:flutter_messenger_app/components/my_textfield.dart";
 import "package:flutter_messenger_app/services/auth/auth_service.dart";
 import "package:flutter_messenger_app/services/auth/chat/chat_service.dart";
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   final String receiverEmail;
   final String receiverID;
   
@@ -18,32 +18,84 @@ class ChatPage extends StatelessWidget {
     
     });
 
-  //text conttroller
+  @override
+  State<ChatPage> createState() => _ChatPageState();
+}
 
+class _ChatPageState extends State<ChatPage> {
+  //text conttroller
   final TextEditingController _messageController = TextEditingController();
 
   //chat & auth services
-
   final ChatService _chatService = ChatService();
   final AuthService _authService = AuthService();
 
-  //send message
+  //for textfield focus
+  FocusNode myFocusNode = FocusNode();
 
+  @override
+  void initState() {
+    super.initState();
+
+    //add listener to focus node
+
+    myFocusNode.addListener(() {
+      if (myFocusNode.hasFocus) {
+        //cause a delay so that the keyboard has time to show up
+        Future.delayed(
+          const Duration(milliseconds: 500),
+          () => scrollDown(),
+        );
+      }
+    }
+    );
+
+    // wait a bit for listview to built  then scroll down
+    Future.delayed(const Duration(milliseconds: 500),
+    () => scrollDown(),
+    );
+  }
+
+  @override
+  void dispose() {
+    myFocusNode.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  //scroll controller
+
+  final ScrollController _scrollController = ScrollController();
+  void scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent, 
+      duration: const Duration(seconds: 1), 
+      curve: Curves.fastOutSlowIn,
+      );
+  }
+
+
+
+
+  //send message
   void sendMessage() async {
     if (_messageController.text.isNotEmpty) {
-      await _chatService.sendMessage(receiverID, _messageController.text);
+      await _chatService.sendMessage(widget.receiverID, _messageController.text);
 
       //clear text controller
 
       _messageController.clear();
     }
+
+    scrollDown();
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(title: Text(receiverEmail),
+      appBar: AppBar(title: Text(widget.receiverEmail),
       backgroundColor: Colors.transparent,
       elevation: 0,
       foregroundColor: Colors.grey,
@@ -68,12 +120,12 @@ class ChatPage extends StatelessWidget {
 
 
   }
-    //build message list
 
+    //build message list
     Widget _buildMessageList() {
       String senderID = _authService.getCurrentUser()!.uid;
       return StreamBuilder(
-        stream: _chatService.getMessages(receiverID, senderID), 
+        stream: _chatService.getMessages(widget.receiverID, senderID), 
         builder: (context, snapshot) {
 
           //errors
@@ -90,6 +142,7 @@ class ChatPage extends StatelessWidget {
           //return list view
 
           return ListView(
+            controller: _scrollController,
             children:
               snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
           );
@@ -125,7 +178,7 @@ class ChatPage extends StatelessWidget {
     //build message input
     Widget _buildUserInput() {
       return Padding(
-        padding: const EdgeInsets.only(bottom: 50.0),
+        padding: const EdgeInsets.only(bottom: 35.0),
         child: Row(
           children: [
             //textfield should take up most of the space
@@ -133,8 +186,8 @@ class ChatPage extends StatelessWidget {
               child: MyTextField(
               controller: _messageController, 
               hintText: "Type a message",
-               
               obscureText: false,
+              focusNode: myFocusNode,
               ),
               
             ),
@@ -158,5 +211,4 @@ class ChatPage extends StatelessWidget {
         ),
       );
     }
-
 }
