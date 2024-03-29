@@ -72,12 +72,13 @@ class Homepage extends StatelessWidget {
     if (userData["email"] != _authService.getCurrentUser()!.email) {
     
     return UserTile(
-    text: userData['email'],
+    text: userData['username'],
     onTap: () {
       //when tapped -> ChatPage
       Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(
         receiverEmail: userData["email"],
         receiverID: userData["uid"],
+        receiverNickname: userData['username'],
       ),
       )
       );
