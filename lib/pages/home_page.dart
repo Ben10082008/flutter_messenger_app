@@ -22,11 +22,12 @@ class Homepage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: 
+        title:
         Text("Home"),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: Colors.grey,
+        foregroundColor: const Color.fromARGB(255, 0, 0, 0),
+        centerTitle: true,
 
         
         
@@ -69,7 +70,7 @@ class Homepage extends StatelessWidget {
   Widget _buildUserListItem(Map<String, dynamic> userData, BuildContext context) {
     //display all user except current user
 
-    if (userData["email"] != _authService.getCurrentUser()!.email) {
+    if (userData["uid"] != _authService.getCurrentUser()!.uid) {
     
     return UserTile(
     text: userData['username'],

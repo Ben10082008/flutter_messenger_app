@@ -1,13 +1,12 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class MyButton extends StatelessWidget {
+class MyRegisterButton extends StatelessWidget {
   final String text;
   final void Function()? onTap;
 
-  const MyButton({
+  const MyRegisterButton({
     super.key, 
     required this.text,
     required this.onTap,
@@ -26,7 +25,8 @@ class MyButton extends StatelessWidget {
       padding: const EdgeInsets.all(25),
       margin: const EdgeInsets.symmetric(horizontal: 25),
       child: Center(
-        child: Text("Login",
+        child: Text(
+          "Register",
          style: TextStyle(
           fontSize: 20, 
           color: Theme.of(context).colorScheme.onBackground),

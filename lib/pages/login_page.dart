@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_messenger_app/components/my_login_button.dart';
 import 'package:flutter_messenger_app/services/auth/auth_service.dart';
 import 'package:flutter_messenger_app/color_schemes.g.dart';
-import 'package:flutter_messenger_app/components/my_button.dart';
 import 'package:flutter_messenger_app/components/my_textfield.dart';
 import 'package:flutter_messenger_app/pages/register_page.dart';
 
@@ -72,7 +72,7 @@ class LogInPage extends StatelessWidget {
               const SizedBox(height: 25),
               
               
-              MyButton(
+              MyLoginButton(
                 text: "Login",
                 onTap: () {
                   HapticFeedback.heavyImpact(); // Haptisches Feedback hinzufügen
