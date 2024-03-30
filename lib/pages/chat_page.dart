@@ -10,11 +10,13 @@ import "package:flutter_messenger_app/services/auth/chat/chat_service.dart";
 class ChatPage extends StatefulWidget {
   final String receiverEmail;
   final String receiverID;
+  final String receiverNickname;
   
-  ChatPage({
+  ChatPage( {
     super.key,
     required this.receiverEmail, 
-    required this.receiverID
+    required this.receiverID,
+    required this.receiverNickname,
     
     });
 
@@ -94,11 +96,12 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(title: Text(widget.receiverEmail),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(context).colorScheme.onTertiary,
+      appBar: AppBar(title: Text(widget.receiverNickname),
+      backgroundColor: Theme.of(context).colorScheme.outline,
       elevation: 0,
-      foregroundColor: Colors.grey,
+      foregroundColor: Color.fromARGB(255, 0, 0, 0),
+      centerTitle: true,
   
 
       

@@ -25,10 +25,10 @@ class MyTextField extends StatelessWidget {
         focusNode: focusNode,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.onBackground),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.tertiary),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.shadow),
         ),
         fillColor: Theme.of(context).colorScheme.onTertiary,
         filled: true,

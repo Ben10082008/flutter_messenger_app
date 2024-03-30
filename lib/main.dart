@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_messenger_app/services/auth/auth_gate.dart';
 import 'package:flutter_messenger_app/services/auth/login_or_register.dart';
 import 'package:flutter_messenger_app/color_schemes.g.dart';
-import 'package:flutter_messenger_app/components/my_button.dart';
 import 'package:flutter_messenger_app/components/my_textfield.dart';
 import 'package:flutter_messenger_app/firebase_options.dart';
 import 'package:flutter_messenger_app/pages/login_page.dart';
