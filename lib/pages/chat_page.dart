@@ -1,16 +1,21 @@
+
+
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
+import "package:flutter_expandable_fab/flutter_expandable_fab.dart";
 import "package:flutter_messenger_app/components/chat_bubble.dart";
 import "package:flutter_messenger_app/components/my_textfield.dart";
 import "package:flutter_messenger_app/services/auth/auth_service.dart";
 import "package:flutter_messenger_app/services/auth/chat/chat_service.dart";
+import "package:flutter_speed_dial/flutter_speed_dial.dart";
 
 class ChatPage extends StatefulWidget {
   final String receiverEmail;
   final String receiverID;
   final String receiverNickname;
+  
   
   ChatPage( {
     super.key,
@@ -73,6 +78,7 @@ class _ChatPageState extends State<ChatPage> {
       _scrollController.position.maxScrollExtent, 
       duration: const Duration(seconds: 1), 
       curve: Curves.fastOutSlowIn,
+
       );
   }
 
@@ -96,11 +102,13 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+     
       backgroundColor: Theme.of(context).colorScheme.onTertiary,
-      appBar: AppBar(title: Text(widget.receiverNickname),
+      appBar: AppBar(title: Text(widget.receiverNickname.toUpperCase()),
       backgroundColor: Theme.of(context).colorScheme.outline,
       elevation: 0,
-      foregroundColor: Color.fromARGB(255, 0, 0, 0),
+      foregroundColor: const Color.fromARGB(255, 0, 0, 0),
       centerTitle: true,
   
 
@@ -181,7 +189,7 @@ class _ChatPageState extends State<ChatPage> {
     //build message input
     Widget _buildUserInput() {
       return Padding(
-        padding: const EdgeInsets.only(bottom: 35.0),
+        padding: const EdgeInsets.only(bottom: 25.0),
         child: Row(
           children: [
             //textfield should take up most of the space
@@ -201,15 +209,41 @@ class _ChatPageState extends State<ChatPage> {
                 color: Colors.green,
               shape: BoxShape.circle,
               ),
-              margin: const EdgeInsets.only(right: 25),
+              margin: const EdgeInsets.only(right: 10),
               child: IconButton(
                 onPressed: sendMessage,
                 icon: const Icon(
                   Icons.arrow_upward,
                   color: Colors.white,
                   ),
+  
+              ),
+              
+            ),
+
+            //drop menu
+
+            Container(
+              decoration: const BoxDecoration(
+                color: Colors.black,
+              shape: BoxShape.circle,
+              ),
+              margin: EdgeInsets.only(right: 10),
+              child: const IconButton(
+                onPressed: null,
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                  ),
               ),
             ),
+
+            
+
+            
+            
+            
+            
           ],
         ),
       );
