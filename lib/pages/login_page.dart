@@ -58,16 +58,22 @@ class LogInPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              MyTextField(
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
                 hintText: "Email",
                 obscureText: false,
                 controller: _emailController,
               ),
+              ),
               const SizedBox(height: 25),
-              MyTextField(
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
                 hintText: "Password",
                 obscureText: true,
                 controller: _pwController,
+                ),
               ),
               const SizedBox(height: 25),
               

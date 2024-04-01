@@ -18,12 +18,13 @@ class MyRegisterButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
         color: Theme.of(context).colorScheme.secondary,
 
       
       ),
-      padding: const EdgeInsets.all(25),
-      margin: const EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 70),
       child: Center(
         child: Text(
           "Register",

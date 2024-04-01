@@ -6,6 +6,7 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:flutter_expandable_fab/flutter_expandable_fab.dart";
 import "package:flutter_messenger_app/components/chat_bubble.dart";
+import "package:flutter_messenger_app/components/expandable_fab.dart";
 import "package:flutter_messenger_app/components/my_textfield.dart";
 import "package:flutter_messenger_app/services/auth/auth_service.dart";
 import "package:flutter_messenger_app/services/auth/chat/chat_service.dart";
@@ -103,12 +104,25 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
 
+      floatingActionButton: const ExpandableFabPantryMaster(
+      ),
+      
+      floatingActionButtonLocation: ExpandableFab.location,
+      
+      
+      
+      
+              
+
      
       backgroundColor: Theme.of(context).colorScheme.onTertiary,
-      appBar: AppBar(title: Text(widget.receiverNickname.toUpperCase()),
-      backgroundColor: Theme.of(context).colorScheme.outline,
+      appBar: AppBar(
+        title: Text(
+          widget.receiverNickname.toUpperCase()
+          ),
+      backgroundColor: const Color.fromARGB(250, 43, 42, 42),
       elevation: 0,
-      foregroundColor: const Color.fromARGB(255, 0, 0, 0),
+      foregroundColor: const Color.fromARGB(255, 255, 255, 255),
       centerTitle: true,
   
 
@@ -120,8 +134,10 @@ class _ChatPageState extends State<ChatPage> {
         Expanded(child: _buildMessageList(),
         
         ),
-
-        _buildUserInput(),
+        Padding(
+          padding: const EdgeInsets.only(left: 8, right: 75),
+          child: _buildUserInput(),
+        )
 
         //user input
 
@@ -138,6 +154,7 @@ class _ChatPageState extends State<ChatPage> {
       return StreamBuilder(
         stream: _chatService.getMessages(widget.receiverID, senderID), 
         builder: (context, snapshot) {
+        
 
           //errors
           if (snapshot.hasError) {
@@ -187,65 +204,38 @@ class _ChatPageState extends State<ChatPage> {
     }
 
     //build message input
-    Widget _buildUserInput() {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 25.0),
-        child: Row(
-          children: [
-            //textfield should take up most of the space
-            Expanded(
-              child: MyTextField(
+//build message input
+Widget _buildUserInput() {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 12.0),
+    child: Row(
+      children: [
+        //textfield should take up most of the space
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: MyTextField(
+              borderRadius: 25,
               controller: _messageController, 
               hintText: "Type a message",
               obscureText: false,
               focusNode: myFocusNode,
-              ),
-              
-            ),
-        
-            //send button
-            Container(
-              decoration: const BoxDecoration(
-                color: Colors.green,
-              shape: BoxShape.circle,
-              ),
-              margin: const EdgeInsets.only(right: 10),
-              child: IconButton(
+              suffixIcon: IconButton(
                 onPressed: sendMessage,
                 icon: const Icon(
-                  Icons.arrow_upward,
-                  color: Colors.white,
-                  ),
-  
-              ),
-              
-            ),
-
-            //drop menu
-
-            Container(
-              decoration: const BoxDecoration(
-                color: Colors.black,
-              shape: BoxShape.circle,
-              ),
-              margin: EdgeInsets.only(right: 10),
-              child: const IconButton(
-                onPressed: null,
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  ),
+                  Icons.send,
+                  color: Colors.green,
+                  
+                ),
+                iconSize: 30,
               ),
             ),
-
-            
-
-            
-            
-            
-            
-          ],
+          ),
         ),
-      );
-    }
+      ],
+    ),
+  );
+}
+
+    
 }

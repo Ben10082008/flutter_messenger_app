@@ -84,7 +84,7 @@ class RegisterPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               Text(
-                "Lass uns deinen ersten account erstellen!",
+                "Let's create your first account!",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 16,
@@ -95,26 +95,36 @@ class RegisterPage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              MyTextField(
-                hintText: "Username", 
-                obscureText: false, 
-                controller: _usernameController
-                ),
-
-              const SizedBox(height: 25),
-
-              MyTextField(
-                hintText: "Email",
-                obscureText: false,
-                controller: _emailController,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
+                  hintText: "Username", 
+                  obscureText: false, 
+                  controller: _usernameController,
+                  
+                  ),
               ),
 
               const SizedBox(height: 25),
 
-              MyTextField(
-                hintText: "Password",
-                obscureText: true,
-                controller: _pwController,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
+                  hintText: "Email",
+                  obscureText: false,
+                  controller: _emailController,
+                ),
+              ),
+
+              const SizedBox(height: 25),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
+                  hintText: "Password",
+                  obscureText: true,
+                  controller: _pwController,
+                ),
               ),
 
 
@@ -122,10 +132,13 @@ class RegisterPage extends StatelessWidget {
 
               //passwort text
 
-              MyTextField(
-                hintText: "Confirm Password",
-                obscureText: true,
-                controller: _confirmpw,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
+                  hintText: "Confirm Password",
+                  obscureText: true,
+                  controller: _confirmpw,
+                ),
               ),
 
               const SizedBox(height: 25),
