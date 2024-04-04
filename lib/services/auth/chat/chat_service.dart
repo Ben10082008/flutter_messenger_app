@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_messenger_app/models/message.dart';
+import 'package:flutter_messenger_app/models/user.dart' as messageUser;
 
 class ChatService {
 
@@ -12,15 +12,11 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 
 //get user stream
 
-Stream<List<Map<String,dynamic>>> getUserStream() {
-  return _firestore.collection("Users").snapshots().map((snapshot) {
-    return snapshot.docs.map((doc) {
-      final user = doc.data();
-      debugPrint("User in db: $user");
-      //return user
-      return user;
-    }).toList();
-  });
+Stream<QuerySnapshot<messageUser.User>> getUserStream() {
+  return _firestore
+      .collection("Users")
+      .withConverter(fromFirestore: messageUser.User.fromFirestore, toFirestore: (messageUser.User user, _) => user.toFirestore())
+      .snapshots(includeMetadataChanges: false);
 }
 //send messages
 
@@ -35,8 +31,8 @@ Stream<List<Map<String,dynamic>>> getUserStream() {
     //create a new message
 
     Message newMessage = Message(
-      senderID : currentUserEmail,
-      senderEmail : currentUserID,
+      senderID : currentUserID,
+      senderEmail : currentUserEmail,
       receiverID : receiverID,
       message : message,
       timestamp : timestamp

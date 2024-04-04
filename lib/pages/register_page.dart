@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_messenger_app/components/my_register_button.dart';
 import 'package:flutter_messenger_app/services/auth/auth_service.dart';
 import 'package:flutter_messenger_app/color_schemes.g.dart';
-import 'package:flutter_messenger_app/components/my_button.dart';
 import 'package:flutter_messenger_app/components/my_textfield.dart';
 
 
@@ -15,6 +16,7 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
   final TextEditingController _confirmpw = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
 
   final void Function()? onTap;
@@ -34,7 +36,8 @@ class RegisterPage extends StatelessWidget {
       try {
       _auth.signUpWithEmailPassword(
       _emailController.text,
-       _pwController.text);
+       _pwController.text,
+       _usernameController.text);
       }catch (e) {
         showDialog(
         context: context,
@@ -81,7 +84,7 @@ class RegisterPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               Text(
-                "Lass uns deinen ersten account erstellen!",
+                "Let's create your first account!",
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontSize: 16,
@@ -90,20 +93,38 @@ class RegisterPage extends StatelessWidget {
 
               //Email text
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
 
-              MyTextField(
-                hintText: "Email",
-                obscureText: false,
-                controller: _emailController,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
+                  hintText: "Username", 
+                  obscureText: false, 
+                  controller: _usernameController,
+                  
+                  ),
               ),
 
               const SizedBox(height: 25),
 
-              MyTextField(
-                hintText: "Password",
-                obscureText: true,
-                controller: _pwController,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
+                  hintText: "Email",
+                  obscureText: false,
+                  controller: _emailController,
+                ),
+              ),
+
+              const SizedBox(height: 25),
+
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
+                  hintText: "Password",
+                  obscureText: true,
+                  controller: _pwController,
+                ),
               ),
 
 
@@ -111,10 +132,13 @@ class RegisterPage extends StatelessWidget {
 
               //passwort text
 
-              MyTextField(
-                hintText: "Confirm Password",
-                obscureText: true,
-                controller: _confirmpw,
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: MyTextField(
+                  hintText: "Confirm Password",
+                  obscureText: true,
+                  controller: _confirmpw,
+                ),
               ),
 
               const SizedBox(height: 25),
@@ -122,9 +146,12 @@ class RegisterPage extends StatelessWidget {
 
               //login button
               
-              MyButton(
-                text: "Login",
-                onTap: () => register(context),
+              MyRegisterButton(
+                text: "Register",
+                onTap: (){
+                  HapticFeedback.heavyImpact();
+                 register(context);
+                }
               ),
 
               const SizedBox(height: 25),

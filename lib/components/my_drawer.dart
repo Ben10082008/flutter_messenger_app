@@ -25,6 +25,7 @@ class MyDrawer extends StatelessWidget {
 
             children: [
               
+              
 
             
               
@@ -33,7 +34,7 @@ class MyDrawer extends StatelessWidget {
             child: Center (
             child: Icon(
               Icons.message,
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.shadow,
               size: 40,
             ),
         
