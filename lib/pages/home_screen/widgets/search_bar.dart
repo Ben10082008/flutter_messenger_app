@@ -27,6 +27,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
         controller: textEditingController,
         obscureText: false,
         focusNode: focusNode,
+        cursorColor: Theme.of(context).colorScheme.onBackground,
         decoration: InputDecoration(
             suffixIcon: isUserSearching ? IconButton(
               icon: const Icon(Icons.clear),
@@ -45,7 +46,7 @@ class _SearchBarCustomState extends State<SearchBarCustom> {
             ),
             focusedBorder: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(30)),
-                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.onBackground)
             ),
             errorBorder: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
