@@ -1,48 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_messenger_app/components/my_drawer.dart';
-import 'package:flutter_messenger_app/pages/home_screen/widgets/search_and_contact_list.dart';
+import 'package:flutter_messenger_app/models/user.dart';
+import 'package:flutter_messenger_app/pages/home_screen/widgets/search_and_contact_list_container.dart';
+import 'package:flutter_messenger_app/services/auth/chat/chat_service.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
 
   bool isSearchFieldVisible = false;
 
-  @override
-  void initState() {
-    super.initState();
-    isSearchFieldVisible = false;
-  }
+  final ChatService chatService = ChatService();
+
+  List<User> availableContatcs = List.empty(growable: true);
+
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Home"),
-          centerTitle: true,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          foregroundColor: Theme.of(context).colorScheme.onSecondary,
-          actions: [
-            IconButton(
-              onPressed: () => setState(() {
-                isSearchFieldVisible = !isSearchFieldVisible;
-              }),
-              icon: const Icon(Icons.search),
-              color: Theme.of(context).colorScheme.onSecondary,
-            ),
-          ],
-        ),
-        drawer: const MyDrawer(),
-        body: SearchAndContactList(
-          onUserWillSearch: isSearchFieldVisible,
-        ),
-      )
+
+    return StreamBuilder<QuerySnapshot<User>>(
+      stream: chatService.getUserStream(), 
+      builder: (context, snapshot) {
+        if(snapshot.hasError) {
+          // No data available
+          return const Center(child: Text("Fehler"),);
+        } else if(snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: Text("Lade"),);
+        } else {
+          snapshot.data?.docs.forEach((element){
+            availableContatcs.add(element.data());
+          });
+
+          return SearchAndContactListContainer(
+            contactList: availableContatcs,
+          );
+        }
+      }
     );
   }
 }
